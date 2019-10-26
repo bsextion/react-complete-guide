@@ -1,0 +1,28 @@
+button {
+    display: block;
+    background-repeat: no-repeat;
+}
+
+figure {
+    width: 600px;
+    background-repeat: no-repeat;
+
+  }
+  
+  figure:hover img {
+    opacity: 0;
+  }
+  
+  img {
+    display: block;
+    width: 100%;
+    pointer-events: none;
+  }
+  #container{
+    max-width: 550px;
+    max-height: 550px;
+  }
+  
+ 
+  
+  

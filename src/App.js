@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-
+import ReactPanZoom from './ImgPanZoom/img-pan-zoom'
+import Pan from './ImgPanZoom/Pan'
 class App extends Component {
+
+
   state = {
     persons: [
       { name: 'Max', age: 28 },
@@ -32,7 +35,6 @@ class App extends Component {
     } )
   }
 
-
   render () {
     const style = {
       backgroundColor: 'white',
@@ -44,23 +46,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        <button style={style} onClick={() => this.switchNameHandler('Maximillia!!!')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Max!!!!')} 
-          changed={this.nameChangedHandler}>My Hobbies: Racing</Person>
-          
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age} />
+
+        {/* <button style={style} onClick={() => this.switchNameHandler('Maximillia!!!')}>Switch Name</button> */}
+          {/* <ReactPanZoom>  */}
+        {/* <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" height='200' width='200' /> */}
+        {/* </ReactPanZoom>  */}
+        <Pan>
+          {/* <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" height='200' width='200' />  */}
+        </Pan>
       </div>
+     
     );
+    
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
