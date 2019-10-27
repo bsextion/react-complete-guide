@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import "./Pan.css";
+import "./ImgZoom.css";
 
 const MAX_ZOOM = 5;
 const MIN_ZOOM = 1;
 let DEFAULT_ZOOM = 1;
 
-export default class Pan extends Component {
+export default class ImgZoom extends Component {
   state = {
-    // backgroundImage: `url${this.props.children})`,
-      // "url(https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg)",
     transform: `scale(${DEFAULT_ZOOM})`,
     transformOrigin: "50%50%",
-
   };
 
   private handleZoomIn = () => {

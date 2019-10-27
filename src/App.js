@@ -3,6 +3,7 @@ import './App.css';
 import Person from './Person/Person';
 import ReactPanZoom from './ImgPanZoom/img-pan-zoom'
 import Pan from './ImgPanZoom/Pan'
+import ImgZoom from './ImgZoom/ImgZoom';
 class App extends Component {
 
 
@@ -51,9 +52,12 @@ class App extends Component {
           {/* <ReactPanZoom>  */}
         {/* <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" height='200' width='200' /> */}
         {/* </ReactPanZoom>  */}
-        <Pan>
-          {/* <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" height='200' width='200' />  */}
-        </Pan>
+        {/* <Pan>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" /> 
+        </Pan> */}
+        <ImgZoom>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" /> 
+        </ImgZoom>
       </div>
      
     );
