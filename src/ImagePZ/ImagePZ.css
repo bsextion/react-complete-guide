@@ -1,0 +1,49 @@
+.img-zoom-container {
+  position: relative;
+}
+
+.draggable {
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 90%;
+  height: 90%;
+
+  box-shadow: 0px 0px 0px 200px rgba(0, 0, 0, 0.5);
+}
+
+.img-zoom-result {
+  /* background-image: url(https://i.stack.imgur.com/7kczi.jpg); */
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 500px;
+  height: 500px;
+  /*   visibility: hidden; */
+  position: relative;
+  background-repeat: no-repeat;
+}
+
+#myimage {
+  height: 100%;
+  width: 100%;
+}
+
+#wrap {
+  display: inline-block;
+
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  opacity: 0.1;
+  border-style: solid;
+  border-width: 2px 2px 2px 2px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#wrap:hover {
+  opacity: 1;
+}

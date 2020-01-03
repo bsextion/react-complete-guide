@@ -4,6 +4,7 @@ import Person from './Person/Person';
 import ReactPanZoom from './ImgPanZoom/img-pan-zoom'
 import Pan from './ImgPanZoom/Pan'
 import ImgZoom from './ImgZoom/ImgZoom';
+import ImagePZ from './ImagePZ/ImagePZ'
 class App extends Component {
 
 
@@ -55,9 +56,10 @@ class App extends Component {
         {/* <Pan>
           <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" /> 
         </Pan> */}
-        <ImgZoom>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" /> 
-        </ImgZoom>
+        <ImagePZ>
+        <img src="http://ultraimg.com/images/0yS4A9e.jpg" /> 
+        </ImagePZ>
+       
       </div>
      
     );

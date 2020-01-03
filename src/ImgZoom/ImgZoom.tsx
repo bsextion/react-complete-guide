@@ -20,6 +20,8 @@ export default class ImgZoom extends Component {
     });
   };
 
+  
+
   private handleZoomOut = () => {
     if (DEFAULT_ZOOM > MIN_ZOOM) {
       DEFAULT_ZOOM--;
@@ -41,6 +43,8 @@ export default class ImgZoom extends Component {
   };
 
   public render() {
+    
+
     return (
       <div className="tiles">
         <div className="tile">
