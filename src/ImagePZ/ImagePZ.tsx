@@ -1,75 +1,60 @@
 import React, { Component, MouseEvent } from "react";
 import "./ImagePZ.css";
 
-const MAX_ZOOM = 5;
-const MIN_ZOOM = 1;
-let DEFAULT_ZOOM = 1;
+const maxZoom = 5;
+const minZoom = 1;
+let zoomVal = 1;
 let cx: any;
 let cy: any;
-let zoomV = 1;
-let heightV = 30;
-let widthV = 30;
 let dragImg = new Image(0, 0);
+let img;
+let lens;
+let result;
 
-export default class ImagePZ extends Component {
-  constructor(props: Readonly<{}>) {
+export default class ImagePZ extends React.Component {
+  imageRef: any;
+  lensRef: any;
+  resultRef: any;
+  heightV = 30;
+  widthV = 30;  
+
+  constructor(props: any) {
     super(props);
 
+    this.imageRef = React.createRef();
+    this.lensRef = React.createRef();
+    this.resultRef = React.createRef()
   }
-  state = {};
-  
-
-    
-  
+  state = {
+     width: `(${this.heightV})px`,
+  height: `(${this.widthV})px`}
+  ;
 
   componentDidMount() {
-  
+
     dragImg.src =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
   imageZoom = (e: React.MouseEvent) => {
-    let img = document.getElementById("myimage");
-    let imgSrc = (document.getElementById(
-      "myimage"
-    ) as HTMLImageElement).src;
-    let imgWH = document.getElementById("myimage") as HTMLCanvasElement;
-    let lens = document.getElementById("img-zoom-lens");
-    let result = document.getElementById("img-zoom-result");
-    // console.log("Img " + img);
-    // console.log("Lens " + lens);
-    // console.log("result " + result);
-    /*calculate the ratio between result DIV and lens:*/
-    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomV;
-    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomV;
+    img = this.imageRef.current;
+    lens = this.lensRef.current;
+    result = this.resultRef.current;
+
+    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomVal;
+    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomVal;
     /*set background properties for the result DIV:*/
-
-    result!.style.backgroundImage = "url('" + imgSrc + "')";
-    // result!.style.backgroundSize =
-    //   imgWH.width * cx + "px " + imgWH!.height * cy + "px";
-
-    /*execute a function when someone moves the cursor over the image, or the lens:*/
+    result!.style.backgroundImage = "url('" + img.src + "')"
+    result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
   };
 
   moveLens = (e: React.DragEvent) => {
-    let img = document.getElementById("myimage");
-    let imgSrc = (document.getElementById(
-      "myimage"
-    ) as HTMLImageElement).src;
-    // let invisibleSrc = (document.getElementById("invisible-image")) as HTMLCanvasElement;
-    let imgWH = document.getElementById("myimage") as HTMLCanvasElement;
-    let lens = document.getElementById("img-zoom-lens");
-    let result = document.getElementById("img-zoom-result");
+    img = this.imageRef.current;
+    lens = this.lensRef.current;
+    result = this.resultRef.current;
 
-    /*prevent any other actions that may occur when moving over the image:*/
+    /*Hide ghost image*/
     e.dataTransfer.setDragImage(dragImg, 0, 0);
-    // e.target.addEventListener("dragstart", function(event) {
-    //     event.dataTransfer.setDragImage(img, 0, 0);
-    // }, false)
-
-    // e.preventDefault();
-    // e.stopPropagation();
-    /*get the cursor's x and y positions:*/
 
     var a;
     var x = 0;
@@ -85,48 +70,37 @@ export default class ImagePZ extends Component {
     x = x - window.pageXOffset;
     y = y - window.pageYOffset;
     /*calculate the position of the lens:*/
-    x = x - lens!.offsetWidth / 2;
-    y = y - lens!.offsetHeight / 2;
+    x = x - lens.offsetWidth / 2;
+    y = y - lens.offsetHeight / 2;
     /*prevent the lens from being positioned outside the image:*/
-    if (x > imgWH!.width - lens!.offsetWidth) {
-      x = imgWH!.width - lens!.offsetWidth;
+    if (x > img.width - lens.offsetWidth) {
+      x = img.width - lens.offsetWidth;
     }
     if (x < 0) {
       x = 0;
     }
-    if (y > imgWH!.height - lens!.offsetHeight) {
-      y = imgWH!.height - lens!.offsetHeight;
+
+
+    if (y > img.height - lens.offsetHeight) {
+      y = img.height - lens.offsetHeight;
     }
     if (y < 0) {
       y = 0;
     }
     /*set the position of the lens:*/
-    lens!.style.left = x + "px";
-    lens!.style.top = y + "px";
-
-
+    lens.style.left = x + "px";
+    lens.style.top = y + "px";
 
     /*display what the lens "sees":*/
-    result!.style.backgroundPosition = "-" + x * cx + "px -" + y * cy + "px";
-    lens!.style.backgroundPosition = "-" + x * cx + "px -" + y * cy + "px";
-    // blur!.style.backgroundPosition = lens!.style.backgroundPosition
+    result.style.backgroundPosition = "-" + x * cx + "px -" + y * cy + "px";
+    lens.style.backgroundPosition = "-" + x * cx + "px -" + y * cy + "px";
 
-    // invisibleSrc.style.background = lens!.style.background;
-    // invisibleSrc.style.backgroundPosition = lens!.style.backgroundPosition
-    // invisibleSrc!.style.left = img!.style.left;
-    // invisibleSrc!.style.top = img!.style.top;
+    lens.style.backgroundSize = "background-size: contain;";
 
-    // lens!.style.backgroundImage = 'url(' + invisibleSrc + ')';
-    let pos = this.getCursorPos(e);
-    lens!.style.backgroundSize = "background-size: contain;";
-    // e.dataTransfer.setDragImage(dragImg, 0, 0);
-
-    // this.getBackgroundPos(result!.style.backgroundImage);
   };
 
-
   getCursorPos = (e: any) => {
-    let img = document.getElementById("myimage");
+    img = this.imageRef.current;
 
     var a,
       x = 0,
@@ -144,41 +118,41 @@ export default class ImagePZ extends Component {
   };
 
   zoomIn = () => {
-    zoomV++;
-    widthV = widthV - 10;
-    heightV = heightV - 10;
+    zoomVal++;
+    this.widthV = this.widthV - 10;
+    this.heightV = this.heightV - 10;
     let img = document.getElementById("myimage");
     let imgSrc = (document.getElementById("myimage") as HTMLImageElement).src;
     let imgWH = document.getElementById("myimage") as HTMLCanvasElement;
     let lens = document.getElementById("img-zoom-lens");
     let result = document.getElementById("img-zoom-result");
-    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomV;
-    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomV;
+    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomVal;
+    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomVal;
     /*set background properties for the result DIV:*/
 
-    lens!.style.height = heightV + "px";
-    lens!.style.width = widthV + "px";
+    lens!.style.height = this.heightV + "px";
+    lens!.style.width = this.widthV + "px";
+  
 
     // result!.style.backgroundImage = "url('" + imgSrc + "')";
     result!.style.backgroundSize =
-      imgWH.width * cx + "px " + imgWH!.height * cy + "px";
+    imgWH.width * cx + "px " + imgWH!.height * cy + "px";
   };
 
   zoomOut = () => {
-    zoomV--;
-    widthV = widthV + 10;
-    heightV = heightV + 10;
+    zoomVal--;
+    this.widthV = this.widthV + 10;
+    this.heightV = this.heightV + 10;
     let img = document.getElementById("myimage");
     let imgSrc = (document.getElementById("myimage") as HTMLImageElement).src;
     let imgWH = document.getElementById("myimage") as HTMLCanvasElement;
     let lens = document.getElementById("img-zoom-lens");
     let result = document.getElementById("img-zoom-result");
-    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomV;
-    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomV;
+    cx = (result!.offsetWidth / lens!.offsetWidth) * zoomVal;
+    cy = (result!.offsetHeight / lens!.offsetHeight) * zoomVal;
     /*set background properties for the result DIV:*/
 
-    lens!.style.height = heightV + "px";
-    lens!.style.width = widthV + "px";
+
 
     result!.style.backgroundImage = "url('" + imgSrc + "')";
     result!.style.backgroundSize =
@@ -186,27 +160,31 @@ export default class ImagePZ extends Component {
   };
 
   public render() {
-  
+
+    const lensStyle = {
+      width: `(${this.heightV})px`,
+      height: `(${this.widthV})px`
+    }
 
     return (
-        <div className="img-zoom-container">
-        <div id="img-zoom-result" className="img-zoom-result">
+      <div className="img-zoom-container">
+        <div ref={this.resultRef} id="img-zoom-result" className="img-zoom-result">
           <div id="wrap">
-          <div className="img-zoom-lens" id="img-zoom-lens" onDragStart={this.moveLens} onDrag={this.moveLens} onDragEnd={this.moveLens} draggable={true}></div>
-          <img id="myimage" 
-          src="https://i.stack.imgur.com/7kczi.jpg" width="75" 
-          height="60" onMouseMove={this.imageZoom}></img>
+            <div ref={this.lensRef} className="img-zoom-lens" id="img-zoom-lens" onDragStart={this.moveLens} onDrag={this.moveLens} onDragEnd={this.moveLens} draggable={true} style={lensStyle}></div>
+            <img ref={this.imageRef} id="myimage"
+              src="https://i.stack.imgur.com/7kczi.jpg" width="75"
+              height="60" onMouseMove={this.imageZoom}></img>
           </div>
-         
-          </div>
-             <button onClick={this.zoomOut}>Zoom In </button>
-      <button onClick={this.zoomOut}>Zoom Out </button>
-           </div>
-           
-           
-       
-      
- 
+
+        </div>
+        <button onClick={this.zoomOut}>Zoom In </button>
+        <button onClick={this.zoomOut}>Zoom Out </button>
+      </div>
+
+
+
+
+
     );
   }
 }
