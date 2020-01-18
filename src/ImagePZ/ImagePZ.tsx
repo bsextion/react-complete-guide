@@ -1,6 +1,7 @@
 import React, { Component, MouseEvent } from "react";
 import "./ImagePZ.css";
 
+
 const maxZoom = 5;
 const minZoom = 1;
 let zoomVal = 1;
@@ -10,6 +11,7 @@ let dragImg = new Image(0, 0);
 let img;
 let lens;
 let result;
+
 
 export default class ImagePZ extends React.Component {
   imageRef: any;
@@ -30,7 +32,12 @@ export default class ImagePZ extends React.Component {
   height: `(${this.widthV})px`}
   ;
 
+  
   componentDidMount() {
+    this.map = L.map('map', {
+      center: [51.505, -0.09],
+      zoom: 5,
+    })
 
     dragImg.src =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
@@ -61,7 +68,7 @@ export default class ImagePZ extends React.Component {
     var y = 0;
     //   e = e || window.event;
 
-    a = img!.getBoundingClientRect();
+    a = img.getBoundingClientRect();
 
     /*calculate the cursor's x and y coordinates, relative to the image:*/
     x = e.pageX - a.left;

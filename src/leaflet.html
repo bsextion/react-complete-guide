@@ -1,0 +1,105 @@
+<html>
+<!-- See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html -->
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css">
+  </script>
+  <style>
+    #mapid {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    .tiles {
+      width: 95%;
+      height: 100%;
+    }
+
+
+    #photo {}
+
+    .tile {
+      float: left;
+      width: 800px;
+      height: 600px;
+      /* overflow: auto; */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tiles">
+    <div class="tile">
+      <div class="photo">
+        <div id="mapid">
+        </div>
+      </div>
+    </div>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="zoomIn()">Zoom In</button>
+    <button onclick="zoomOut()">Zoom Out</button>
+    <input type="range" min="0" max="200" value="0" class="slider" id="brightness-slider">
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+  <script>
+    // Using leaflet.js to pan and zoom a big image.
+    // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
+
+    // create the slippy map
+    var map = L.map('mapid', {
+      minZoom: 1,
+      maxZoom: 4,
+      center: [0, 0],
+      zoom: 1,
+      maxBoundsViscosity: 1,
+      crs: L.CRS.Simple,
+      attributionControl: false,
+      zoomControl: false,
+
+    });
+
+
+    var img = L.imageOverlay('http://kempe.net/images/newspaper-big.jpg', [
+      [0, 0],
+      [432, 576]
+    ]); //initial size ( at zoom 0, double size at zoom 1 )
+    img.addTo(map);
+    // tell leaflet that the map is exactly as big as the image
+    map.setMaxBounds(new L.LatLngBounds([0, 0], [432, 576])); // prevent panning outside the image area  
+
+    function resetView() {
+      map.setView([0, 0], 1)
+    }
+
+    function zoomOut() {
+      console.log(map.getZoom())
+      map.zoomOut();
+    }
+
+    function zoomIn() {
+      console.log(map.getZoom())
+      map.zoomIn();
+
+    }
+
+    var slider = document.getElementById('brightness-slider');
+
+    slider.addEventListener('input', function () {
+      console.log(map)
+      img.setStyle({
+    opacity: 0.5
+})
+      
+  
+      // var value = e.target.value;
+      // tileLayer.getContainer().style.filter = 'brightness(' + value + '%)';
+    });
+
+  </script>
+
+</body>
+
+</html>
