@@ -34,10 +34,10 @@ export default class ImagePZ extends React.Component {
 
   
   componentDidMount() {
-    this.map = L.map('map', {
-      center: [51.505, -0.09],
-      zoom: 5,
-    })
+    // this.map = L.map('map', {
+    //   center: [51.505, -0.09],
+    //   zoom: 5,
+    // })
 
     dragImg.src =
       "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";

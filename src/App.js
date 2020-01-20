@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import ReactPanZoom from './ImgPanZoom/img-pan-zoom'
-import Pan from './ImgPanZoom/Pan'
-import ImgZoom from './ImgZoom/ImgZoom';
-import ImagePZ from './ImagePZ/ImagePZ'
+import Leaflet from "./LeafZoom/leaflet";
 class App extends Component {
 
 
@@ -56,9 +53,11 @@ class App extends Component {
         {/* <Pan>
           <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/1_The_Opera_House_in_Sydney.jpg" /> 
         </Pan> */}
-        <ImagePZ>
+        {/* <ImagePZ>
         <img src="http://ultraimg.com/images/0yS4A9e.jpg" /> 
-        </ImagePZ>
+        </ImagePZ> */}
+      <Leaflet></Leaflet>
+
        
       </div>
      

@@ -33,7 +33,7 @@
   <div class="tiles">
     <div class="tile">
       <div class="photo">
-        <div id="mapid">
+        <div style="filter: `brightness(${brightValue}%)`" id="mapid">
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
   <script>
     // Using leaflet.js to pan and zoom a big image.
     // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
-
+    var brightValue = 100;
     // create the slippy map
     var map = L.map('mapid', {
       minZoom: 1,
@@ -88,15 +88,21 @@
     var slider = document.getElementById('brightness-slider');
 
     slider.addEventListener('input', function () {
-      console.log(map)
-      img.setStyle({
-    opacity: 0.5
+
+      console.log(brightValue)
+      brightValue++;
+      // img.getElement().style.filter=`brightness(150%)`
+      img.getElement().style.filter=`brightness(${brightValue}%)`
+      
+    // opacity: 0.5
+  
 })
       
   
       // var value = e.target.value;
       // tileLayer.getContainer().style.filter = 'brightness(' + value + '%)';
-    });
+      //
+      this.imageRef.current.firstElementChild
 
   </script>
 
