@@ -1,120 +1,79 @@
-import React, { Component } from "react";
-import "./App.css";
-import Radium from 'radium';
-import Person from "./Person/Person";
+import React, { useState } from "react";
+import Person from './Person/Person'
 
-class App extends Component {
-  state = {
-    persons: [
-      { id: 'as', name: 'Max', age: 28 },
-      { id: 'bs', name: 'Manu', age: 29 },
-      { id: 'cs', name: 'Stephanie', age: 26 }
-    ],
-    otherState: "some other value",
-    showPersons: false
-  };
-
-  nameChangedHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id;
+  const app = props => {
+  const [personsState, setPersonsState] =  useState({ persons: [
+          {name: 'Max', age: 25},
+          {name: 'Stephanie', age: 21},
+          {name: 'George', age: 26},
+        ],
+        otherState: 'some other value'
     });
-    const person = {
-      ...this.state.persons[personIndex]
-    };
 
-    // const person = Object.assign({}, this.state.persons[personIndex]);
+    const switchNameHandler = (newName) => {
+  
+      setPersonsState({ persons: [
+            {name: 'D', age: 25},
+            {name: 'S', age: 21},
+            {name: newName, age: 26},
+          ]})
 
-    person.name = event.target.value;
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
-
-    this.setState({
-      persons: [
-        { name: "Max", age: 28 },
-        { name: event.target.value, age: 25 },
-        { name: "Stephanie", age: 26 }
-      ]
-    });
-  };
-
-  // switchNameHandler = newName => {
-  //   this.setState({
-  //     persons: [
-  //       { name: newName, age: 28 },
-  //       { name: "Manu", age: 29 },
-  //       { name: "Stephanie", age: 27 }
-  //     ]
-  //   });
-  // };
-
-  deletePersonHandler = (personIndex) => {
-  //  const persons = this.state.persons.slice();
-  const persons = [...this.state.persons];
-   persons.splice(personIndex, 1)
-   this.setState({persons: persons})
-  }
-
-  togglePersonsHandler = () => {
-    const doesShow = this.state.showPersons;
-    this.setState({ showPersons: !doesShow });
-  };
-
-  render() {
-    const style = {
-      backgroundColor: "green",
-      color: 'white',
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
-
-    let persons = null; 
-    if (this.state.showPersons) {
-      persons = (
-        <div>
-          {this.state.persons.map((person,index) => {
-            return <Person 
-            click={() => this.deletePersonHandler(index)}
-            name={person.name}  
-            age={person.age}
-            key={person.id} 
-            changed={(event) => this.nameChangedHandler(event, person.id)}
-            />
-          })}
-        </div>
-      );
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'lightred',
-        color: 'black'
-      }
+      
+    
+    }
+  
+   const nameChangedHandler = (event) => {
+      this.setState({
+        persons: [
+          {name: event.target.value, age: 21},
+          {name: 'Max', age: 28},
+          {name: 'George', age: 26},
+        ],
+        
+      })
     }
 
-    const classes = [];
-    if(this.state.persons.length <= 2) {
-      classes.push('red'); //classes =['red]
-    }
 
-    if (this.state.persons.length <= 1) {
-      classes.push('bold') //classes=['red', bold']
-    }
-
-    return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        <button style={style} onClick={this.togglePersonsHandler}>
-          Toggle Persons</button>
-          {persons}
-      </div>
-    );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
-  }
+  return (
+    <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p>This is working</p>
+    <button onClick={() => switchNameHandler('Max')}>Switch Name</button>
+    <Person 
+    name={personsState.persons[0].name} 
+    age={personsState.persons[0].age}
+    changed={nameChangedHandler}>My hobbies are racing</Person>
+    <Person 
+    name={personsState.persons[1].name} 
+    age={personsState.persons[1].age}/>
+    <Person 
+    name={personsState.persons[2].name} 
+    age={personsState.persons[2].age}
+    click={switchNameHandler.bind(this, 'Maximillian')}
+    />
+    </div>
+  
+  );
+  // return React.createElement('div', {className: "App"}, React.createElement('h1', null, 'Does this work now?' ));
 }
 
-export default Radium(App);
+export default app
+
+// state = {
+//   persons: [
+//     {name: 'Max', age: 25},
+//     {name: 'Stephanie', age: 21},
+//     {name: 'George', age: 26},
+//   ],
+//   otherState: 'some other value'
+// }
+
+// switchNameHandler = () => {
+//   // console.log('Was clicked')
+//   // this.state.persons[0].name = 'Maximillian'
+//   this.setState({ persons: [
+//     {name: 'D', age: 25},
+//     {name: 'S', age: 21},
+//     {name: 'G', age: 26},
+//   ]})
+// }
